@@ -191,7 +191,7 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
 
   def createVolume(self, data, outputVolume, inputVolume, inputNode, imageSize, voxelType, name):
         dataMax = numpy.nanmax(data[numpy.isfinite(data)])
-        logging.info(str(dataMax))
+        # logging.info(str(dataMax))
         #create empty image volume
         imageData = vtk.vtkImageData()
         imageData.SetDimensions(imageSize)
@@ -203,6 +203,7 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
 
         #set volume information
         outputVolume.SetSpacing(inputVolume.GetSpacing())
+
         outputVolume.SetImageDataConnection(thresholder.GetOutputPort())
         #Add volume to scene
         slicer.mrmlScene.AddNode(outputVolume)
@@ -222,17 +223,17 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
         inputNode.GetIJKToRASMatrix(ijkToRAS)
         outputVolume.SetIJKToRASMatrix(ijkToRAS)
 
-        selectionNode = slicer.app.applicationLogic().GetSelectionNode()
-        selectionNode.SetReferenceActiveVolumeID(outputVolume.GetID())
-        slicer.app.applicationLogic().PropagateVolumeSelection(0)
+        # selectionNode = slicer.app.applicationLogic().GetSelectionNode()
+        # selectionNode.SetReferenceActiveVolumeID(outputVolume.GetID())
+        # slicer.app.applicationLogic().PropagateVolumeSelection(0)
 
-        changeColorMapNode = slicer.util.getNode(outputVolume.GetID())
-        displayNode = changeColorMapNode.GetDisplayNode()
+        # changeColorMapNode = slicer.util.getNode(outputVolume.GetID())
+        # displayNode = changeColorMapNode.GetDisplayNode()
         displayNode.AutoWindowLevelOff()
         displayNode.SetLevel(dataMax/2)
         displayNode.SetWindow(dataMax)
         displayNode.SetAndObserveColorNodeID('vtkMRMLColorTableNodeFileViridis.txt')
-        # outputVolume.CreateDefaultStorageNode()
+        outputVolume.CreateDefaultStorageNode()
         return()
 
   def run(self, inputVolume, T2outputVolume, PDoutputVolume, R2outputVolume, r2Cutoff, t2Cutoff):
@@ -345,8 +346,9 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
     pdName = 'PD Map'
     r2Name = 'R^2 Map'
 
-    self.createVolume(t2Map, T2outputVolume, inputVolume, t2Node, imageSize, voxelType, t2Name)
+    #These functions put the different images into the "containers" needed to show the data in Slicer. 
 
+    self.createVolume(t2Map, T2outputVolume, inputVolume, t2Node, imageSize, voxelType, t2Name)
     if PDoutputVolume:
         self.createVolume(pdMap, PDoutputVolume, inputVolume, t2Node, imageSize, voxelType, pdName)
     if R2outputVolume:
