@@ -12,4 +12,4 @@ On Apply, if the user has not selected an appropriate Input volume and a T2 Map 
 ### Background
 T2 is calculated using a linear least squares method. T2 is a mono-exponential decaying signal. Therefore, we log transform the pixel data so that it becomes linear. Using the log transformed data, we fit the data using linear least squares. From the fitted data, we get the slope and intercept. The slope (m) of the fitted equation is equivalent to 1/T2. T2 in ms is extracted as T2 = 1/m. The intercept of the fit is equivalent to the proton density. PD is calcualted every time, and PD maps are created if the user selects a PD output volume from the module. 
 
-There are supporting documentation notes within the module repository that explain some of the linear algebra used. https://github.com/gattia/Slicer-T2mapping
+There are supporting documentation notes within the module repository that explain some of the linear algebra used. https://github.com/gattia/Slicer-T2mapping/tree/master/SupportingDocuments
