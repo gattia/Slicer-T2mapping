@@ -45,17 +45,14 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
     ScriptedLoadableModuleWidget.setup(self)
 
     # Instantiate and connect widgets ...
-
     #
     # Parameters Area
     #
     parametersCollapsibleButton = ctk.ctkCollapsibleButton()
     parametersCollapsibleButton.text = "Parameters"
     self.layout.addWidget(parametersCollapsibleButton)
-
     # Layout within the dummy collapsible button
     parametersFormLayout = qt.QFormLayout(parametersCollapsibleButton)
-
     #
     # input volume selector
     #
@@ -70,7 +67,6 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
     self.inputSelector.setMRMLScene( slicer.mrmlScene )
     self.inputSelector.setToolTip( "Pick the MultiVolume or Multiple Echo image" )
     parametersFormLayout.addRow("Input Volume: ", self.inputSelector)
-
     #
     # output volume selector
     #
@@ -85,8 +81,6 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
     self.T2outputSelector.setMRMLScene( slicer.mrmlScene )
     self.T2outputSelector.setToolTip( "Pick the volume to output the T2 map, or create a new one" )
     parametersFormLayout.addRow("T2 Map Output Volume: ", self.T2outputSelector)
-
-
     #
     # output volume selector - IF THEY WANT A PD MAP
     #
@@ -101,7 +95,6 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
     self.PDoutputSelector.setMRMLScene( slicer.mrmlScene )
     self.PDoutputSelector.setToolTip( "If you want a PD Map, select a volume or create a new one new one to write the Map to" )
     parametersFormLayout.addRow("Proton Density Output Volume: ", self.PDoutputSelector)
-
     #
     # output volume selector - IF THEY WANT AN R2 MAP
     #
@@ -149,8 +142,6 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
 
     # connections
     self.applyButton.connect('clicked(bool)', self.onApplyButton)
-    # self.inputSelector.connect("currentNodeChanged(vtkMRMLNode*)", self.onSelect)
-    # self.outputSelector.connect("currentNodeChanged(vtkMRMLNode*)", self.onSelect)
 
     # Add vertical spacer
     self.layout.addStretch(1)
@@ -161,9 +152,6 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
   def cleanup(self):
     pass
 
-  # def onSelect(self):
-  #   self.applyButton.enabled = self.inputSelector.currentNode() and self.outputSelector.currentNode()
-
   def onApplyButton(self):
     logic = T2mappingLogic()
     r2Cutoff = self.r2ThresholdSliderWidget.value
@@ -172,26 +160,13 @@ class T2mappingWidget(ScriptedLoadableModuleWidget):
     
     inputVolume = self.inputSelector.currentNode()
     T2outputVolume = self.T2outputSelector.currentNode()
-
-    
-
 #
 # T2mappingLogic
 #
 
 class T2mappingLogic(ScriptedLoadableModuleLogic):
-  """This class should implement all the actual
-  computation done by your module.  The interface
-  should be such that other python code can import
-  this class and make use of the functionality without
-  requiring an instance of the Widget.
-  Uses ScriptedLoadableModuleLogic base class, available at:
-  https://github.com/Slicer/Slicer/blob/master/Base/Python/slicer/ScriptedLoadableModule.py
-  """
-
   def createVolume(self, data, outputVolume, inputVolume, inputNode, imageSize, voxelType, name):
         dataMax = numpy.nanmax(data[numpy.isfinite(data)])
-        # logging.info(str(dataMax))
         #create empty image volume
         imageData = vtk.vtkImageData()
         imageData.SetDimensions(imageSize)
@@ -216,19 +191,12 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
         outputVolume.SetName(name)
 
         volumeArray = slicer.util.array(outputVolume.GetID())
-        #volumeArray = slicer.util.array('T2 Map')
         volumeArray[:] = data[:]
 
         ijkToRAS = vtk.vtkMatrix4x4()
         inputNode.GetIJKToRASMatrix(ijkToRAS)
         outputVolume.SetIJKToRASMatrix(ijkToRAS)
 
-        # selectionNode = slicer.app.applicationLogic().GetSelectionNode()
-        # selectionNode.SetReferenceActiveVolumeID(outputVolume.GetID())
-        # slicer.app.applicationLogic().PropagateVolumeSelection(0)
-
-        # changeColorMapNode = slicer.util.getNode(outputVolume.GetID())
-        # displayNode = changeColorMapNode.GetDisplayNode()
         displayNode.AutoWindowLevelOff()
         displayNode.SetLevel(dataMax/2)
         displayNode.SetWindow(dataMax)
@@ -329,7 +297,6 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
     t2Values = numpy.squeeze(t2Values)
     t2Values[poorfit] = 0 #setthe locations that had poor fit to be equal to 0.
 
-
     '''
     Create 3D images of T2/PD data
     '''
@@ -347,59 +314,12 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
     r2Name = 'R^2 Map'
 
     #These functions put the different images into the "containers" needed to show the data in Slicer. 
-
     self.createVolume(t2Map, T2outputVolume, inputVolume, t2Node, imageSize, voxelType, t2Name)
     if PDoutputVolume:
         self.createVolume(pdMap, PDoutputVolume, inputVolume, t2Node, imageSize, voxelType, pdName)
     if R2outputVolume:
         self.createVolume(r2Map, R2outputVolume, inputVolume, t2Node, imageSize, voxelType, r2Name)
-
-
-
-
-    # #create empty image volume
-    # imageData = vtk.vtkImageData()
-    # imageData.SetDimensions(imageSize)
-    # imageData.AllocateScalars(voxelType,1)
-    # thresholder = vtk.vtkImageThreshold()
-    # thresholder.SetInputData(imageData)
-    # thresholder.SetInValue(0)
-    # thresholder.SetOutValue(0)
-
-    # #set volume information
-    # T2outputVolume.SetSpacing(imageSpacing)
-    # T2outputVolume.SetImageDataConnection(thresholder.GetOutputPort())
-    # #Add volume to scene
-    # slicer.mrmlScene.AddNode(T2outputVolume)
-    # displayNode = slicer.vtkMRMLScalarVolumeDisplayNode()
-    # slicer.mrmlScene.AddNode(displayNode)
-
-
-    # T2outputVolume.SetAndObserveDisplayNodeID(displayNode.GetID())
-    # T2outputVolume.CreateDefaultStorageNode()
-    # T2outputVolume.SetName('T2 Map')
-
-    # volumeArray = slicer.util.array(T2outputVolume.GetID())
-    # #volumeArray = slicer.util.array('T2 Map')
-    # volumeArray[:] = t2Map
-
-    # ijkToRAS = vtk.vtkMatrix4x4()
-    # t2Node.GetIJKToRASMatrix(ijkToRAS)
-    # T2outputVolume.SetIJKToRASMatrix(ijkToRAS)
-
-    # selectionNode = slicer.app.applicationLogic().GetSelectionNode()
-    # selectionNode.SetReferenceActiveVolumeID(T2outputVolume.GetID())
-    # slicer.app.applicationLogic().PropagateVolumeSelection(0)
-
-    # changeColorMapNode = slicer.util.getNode(T2outputVolume.GetID())
-    # displayNode = changeColorMapNode.GetDisplayNode()
-    # displayNode.AutoWindowLevelOff()
-    # displayNode.SetLevel(t2Cutoff/2)
-    # displayNode.SetWindow(t2Cutoff)
-    # displayNode.SetAndObserveColorNodeID('vtkMRMLColorTableNodeFileViridis.txt')
-    # T2outputVolume.CreateDefaultStorageNode()
-  
-  
+        
     logging.info('Processing completed')
 
     return True
