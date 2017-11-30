@@ -1,0 +1,15 @@
+## T2 Mapping Slicer Extension 
+
+### Inputs/Outputs
+There are 4 selectors within the module. 
+The first and second selectors are required. They are the Input 4D mri with multiple echos and selection of an output T2 map volume. Users are recommended to select the create new volume from the drop down. If users also want to save a coinciding Proton density (PD) map and/or a coinciding R^2 they are advised to create a new volume for each of these input parameters. 
+
+### Parameter Selectors
+Next, users are advised to determine a minimum R^2 value and an upper T2 threshold value. The R^2 threshold is used to remove pixels that have a poor fit to the T2 data. The T2 upper threshold is used to remove pixels that are above a specified value. This was created to allow users to remove pixels with T2 values that are not characteristic of their tissues of interest. 
+
+On Apply, if the user has not selected an appropriate Input volume and a T2 Map output volume they will get an error. If no PD output or R2 outpur are selected, these maps will not be created. 
+
+### Background
+T2 is calculated using a linear least squares method. T2 is a mono-exponential decaying signal. Therefore, we log transform the pixel data so that it becomes linear. Using the log transformed data, we fit the data using linear least squares. From the fitted data, we get the slope and intercept. The slope (m) of the fitted equation is equivalent to 1/T2. T2 in ms is extracted as T2 = 1/m. The intercept of the fit is equivalent to the proton density. PD is calcualted every time, and PD maps are created if the user selects a PD output volume from the module. 
+
+There are supporting documentation notes within the module repository that explain some of the linear algebra used. https://github.com/gattia/Slicer-T2mapping
