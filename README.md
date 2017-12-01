@@ -18,13 +18,13 @@ There are supporting documentation notes within the module repository that expla
 Included in the screenshots folder are examples of the program (https://github.com/gattia/Slicer-T2mapping/tree/master/Screenshots). 
 
 #### Image 1 shows an example of the module when first opened. 
-![alt text][image_1] <!-- .element height="50%" width="50%" -->
+![alt text][image_1] <!-- .element height="25%" width="25%" -->
 #### Image 2 shows creation of a new volume where the T2map will be saved. 
-![alt text][image_2] <!-- .element height="50%" width="50%" -->
+![alt text][image_2] <!-- .element height="25%" width="25%" -->
 #### Image 3 shows an example of the resulting segmentation created using provided example data (https://github.com/gattia/Slicer-T2mapping/tree/master/Example_multi_echo_mri). 
-![alt text][image_3] <!-- .element height="50%" width="50%" -->
+![alt text][image_3] <!-- .element height="25%" width="25%" -->
 #### Image 4 shows an example of a resulting R^2 map. 
-![alt text][image_4] <!-- .element height="50%" width="50%" -->
+![alt text][image_4] <!-- .element height="25%" width="25%" -->
 
 ### Example Data. 
 There is example data included at https://github.com/gattia/Slicer-T2mapping/tree/master/Example_multi_echo_mri. This data is known to work with the module and successfully creates T2/R^2/PD maps. This data was acquired using the GE Cartigram sequence, a multi-echo-spin-echo sequence with 8 echoes acquired at ~6ms, 12ms, 18ms, 24ms, 30ms, 36ms, 42ms, 48ms. 
