@@ -4,12 +4,12 @@ project(T2mapping)
 
 #-----------------------------------------------------------------------------
 # Extension meta-information
-set(EXTENSION_HOMEPAGE "http://slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/T2mapping")
+set(EXTENSION_HOMEPAGE "https://github.com/gattia/Slicer-T2mapping")
 set(EXTENSION_CATEGORY "Quantification")
 set(EXTENSION_CONTRIBUTORS "Anthony Gatti")
 set(EXTENSION_DESCRIPTION "Used to create T2 maps from multi echo images. ")
-set(EXTENSION_ICONURL "http://www.example.com/Slicer/Extensions/T2mapping.png")
-set(EXTENSION_SCREENSHOTURLS "http://www.example.com/Slicer/Extensions/T2mapping/Screenshots/1.png")
+set(EXTENSION_ICONURL "https://github.com/gattia/Slicer-T2mapping/blob/master/T2mapping.png")
+set(EXTENSION_SCREENSHOTURLS "https://github.com/gattia/Slicer-T2mapping/tree/master/Screenshots")
 
 #-----------------------------------------------------------------------------
 # Extension dependencies

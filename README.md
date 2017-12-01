@@ -15,7 +15,19 @@ T2 is calculated using a linear least squares method. T2 is a mono-exponential d
 There are supporting documentation notes within the module repository that explain some of the linear algebra used. https://github.com/gattia/Slicer-T2mapping/tree/master/SupportingDocuments
 
 ### Examples/Screenshots
-Included in the screenshots folder are examples of the program. Image 1_ shows an example of the module when first opened. Image 2_ shows creation of a new volume where the T2map will be saved. Image 3_ shows an example of the resulting segmentation created using provided example data (). Image 4_ shows an example of a resulting R^2 map. 
+Included in the screenshots folder are examples of the program (https://github.com/gattia/Slicer-T2mapping/tree/master/Screenshots). 
+
+![alt text][image_1] Image 1_ shows an example of the module when first opened. 
+![alt text][image_2] Image 2_ shows creation of a new volume where the T2map will be saved. 
+![alt text][image_3] Image 3_ shows an example of the resulting segmentation created using provided example data (). 
+![alt text][image_4] Image 4_ shows an example of a resulting R^2 map. 
 
 ### Example Data. 
-There is example data included at . This data is known to work with the module and successfully create T2/R^2/PD maps. This data was acquired using the GE Cartigram sequence, a multi-echo-spin-echo sequence with 8 echoes acquired at ~6ms, 12ms, 18ms, 24ms, 30ms, 36ms, 42ms, 48ms. 
+There is example data included at https://github.com/gattia/Slicer-T2mapping/tree/master/Example_multi_echo_mri. This data is known to work with the module and successfully creates T2/R^2/PD maps. This data was acquired using the GE Cartigram sequence, a multi-echo-spin-echo sequence with 8 echoes acquired at ~6ms, 12ms, 18ms, 24ms, 30ms, 36ms, 42ms, 48ms. 
+
+
+
+[image_1]: https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/1_Module_and_multi_echo_t2_image.png "Image 1"
+[image_2]: https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/2_Module_create_new_volume_t2.png "Image 2"
+[image_3]: https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/3_Example_resulting_t2_map_r2_threshold_0.7_t2_upper_threshold_100.png "Image 3"
+[image_4]: https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/4_Example_resulting_R2_map_r2_threshold_0.7_t2_upper_threshold_100.png "Image 4"
