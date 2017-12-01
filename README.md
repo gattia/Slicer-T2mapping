@@ -18,7 +18,7 @@ There are supporting documentation notes within the module repository that expla
 Included in the screenshots folder are examples of the program (https://github.com/gattia/Slicer-T2mapping/tree/master/Screenshots). 
 
 #### Image 1 shows an example of the module when first opened. 
-<img src="https://github.com/gattia/Slicer-T2mapping/blob/master/" width="512">
+<img src="https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/1_Module_and_multi_echo_t2_image.png" width="512">
 #### Image 2 shows creation of a new volume where the T2map will be saved. 
 <img src="https://github.com/gattia/Slicer-T2mapping/blob/master/Screenshots/2_Module_create_new_volume_t2.png" width="512">
 #### Image 3 shows an example of the resulting segmentation created using provided example data (https://github.com/gattia/Slicer-T2mapping/tree/master/Example_multi_echo_mri). 
