@@ -322,5 +322,20 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
         
     logging.info('Processing completed')
 
+    # I called the result node ResultVolume in this code
+    yellow_logic = slicer.app.layoutManager().sliceWidget("Yellow").sliceLogic()
+    yellow_cn = yellow_logic.GetSliceCompositeNode()
+    yellow_cn.SetBackgroundVolumeID(T2outputVolume.GetID())
+    lm = slicer.app.layoutManager()
+    lm.setLayout(slicer.vtkMRMLLayoutNode.SlicerLayoutOneUpYellowSliceView)
+
+    # Fit slice to window
+    sliceNodes = slicer.util.getNodes('vtkMRMLSliceNode*')
+    layoutManager = slicer.app.layoutManager()
+    for sliceNode in sliceNodes.values():
+        sliceWidget = layoutManager.sliceWidget(sliceNode.GetLayoutName())
+        if sliceWidget:
+            sliceWidget.sliceLogic().FitSliceToAll()
+
     return True
 
