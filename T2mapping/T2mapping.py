@@ -4,7 +4,6 @@ import vtk, qt, ctk, slicer
 from slicer.ScriptedLoadableModule import *
 import logging
 import numpy
-import string 
 
 #
 # T2mapping
@@ -220,7 +219,8 @@ class T2mappingLogic(ScriptedLoadableModuleLogic):
     t2Node = slicer.util.getNode(inputVolume.GetID())
     t2Data = slicer.util.array(inputVolume.GetID())
     
-    TE = numpy.array(list(map(float,string.split(t2Node.GetAttribute('MultiVolume.FrameLabels'),',')))) #list of echoes
+    TE = t2Node.GetAttribute('MultiVolume.FrameLabels').split(',') # list of echoes as strings
+    TE = numpy.array(list(map(float, TE))) # convert strings to float and wrap in np.array
     fourDSize = t2Data.shape #Shape of the multidimensional array
     
     #log transform the T2 data to be able to do a linear least squares estimate. 
